@@ -15,11 +15,11 @@ for n in loc_num:
     loc_num[n]=loc_num[n]//2
 
 import json
-
+js_path = 'mergetrain.json'
 def get_train_val_images():
     trainset = []
     valset = []
-    js = json.load(open('/data/track2/buildings_only_train.json','r'))
+    js = json.load(open(js_path,'r'))
     images = js['images']
     for im in images:
         name = im['file_name']
@@ -40,7 +40,7 @@ def get_ann(imgset):
 
     imids = [im['id'] for im in imgset]
     dic = set(imids)
-    js = json.load(open('/data/track2/buildings_only_train.json','r'))
+    js = json.load(open(js_path,'r'))
     anns = js['annotations']
     _check(anns)
     imganns = [ann for ann in anns if ann['image_id'] in dic]
@@ -55,7 +55,7 @@ def getjson(images, anns, key):
     for an in anns:
         an['id'] = an_dict[an['id']]
         an['image_id'] = im_dict[an['image_id']]
-    js = json.load(open('/data/track2/buildings_only_train.json','r'))
+    js = json.load(open(js_path,'r'))
     js['images'] = images
     js['annotations'] = anns
     
